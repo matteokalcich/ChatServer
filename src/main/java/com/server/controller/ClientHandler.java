@@ -85,9 +85,16 @@ public class ClientHandler extends Thread {
                         } else if ("disconnect".equals(type)) {
                             System.out.println("Client " + clientId + " si è disconnesso.");
                             break;
-                        } else if("ice-candidate".equals(type)){
-
-                            sendMessageTo(1, 0, type);
+                        } else if ("ice-candidate".equals(type) || "offer".equals(type) || "answer".equals(type)) {
+                            String to = parsed.get("to");
+                            parsed.put("from", String.valueOf(clientId)); // Mittente
+                        
+                            for (ClientInfo client : clients.values()) {
+                                if (String.valueOf(client.id).equals(to)) {
+                                    sendMessage(client.out, gson.toJson(parsed)); //scelgo questo perchè sendMessageTo manda già il tipo "message" ma a me serve altro tipo (offer, ice-candidate, answer)
+                                    break;
+                                }
+                            }
                         }
                         
                         else {
