@@ -85,7 +85,12 @@ public class ClientHandler extends Thread {
                         } else if ("disconnect".equals(type)) {
                             System.out.println("Client " + clientId + " si è disconnesso.");
                             break;
-                        } else {
+                        } else if("ice-candidate".equals(type)){
+
+                            sendMessageTo(1, 0, type);
+                        }
+                        
+                        else {
                             System.out.println("Tipo di messaggio sconosciuto: " + type);
                         }
                     }
