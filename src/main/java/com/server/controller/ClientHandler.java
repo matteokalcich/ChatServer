@@ -91,6 +91,7 @@ public class ClientHandler extends Thread {
                         
                             for (ClientInfo client : clients.values()) {
                                 if (String.valueOf(client.id).equals(to)) {
+                                    parsed.put("fromUser", String.valueOf(clientName));
                                     sendMessage(client.out, gson.toJson(parsed)); //scelgo questo perchè sendMessageTo manda già il tipo "message" ma a me serve altro tipo (offer, ice-candidate, answer)
                                     break;
                                 }
